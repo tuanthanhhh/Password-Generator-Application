@@ -1,11 +1,14 @@
 #include "RamdomCharacter.h"
 
-extern int n;
-extern int t[100];
+extern int typeCharacter;
+extern int matrixCheckCharacter[1000];
 
 int GetRandom(int min, int max)
 {
-    return min + (int)(rand() * (max - min + 1.0) / (1.0 + RAND_MAX));
+    std::random_device randomDevice;
+    std::mt19937 engine(randomDevice());
+    std::uniform_int_distribution<int> distribution(min, max );
+    return distribution(engine);
 }
 char RandomLowercase()
 {
@@ -21,65 +24,64 @@ char RamdomNumber()
 }
 char RandomSpecialCharacter()
 {
-    char test;
-    int i = GetRandom(1, 3);
-    switch (i)
+    char specialCharacter;
+    switch (GetRandom(1, 3))
     {
     case 1:
     {
-        test = GetRandom(33, 47);
+        specialCharacter = GetRandom(33, 47);
         break;
     }
     case 2:
     {
-        test = GetRandom(58, 64);
+        specialCharacter = GetRandom(58, 64);
         break;
     }
     case 3:
     {
-        test = GetRandom(91, 96);
+        specialCharacter = GetRandom(91, 96);
         break;
     }
     case 4:
     {
-        test = GetRandom(123, 126);
+        specialCharacter = GetRandom(123, 126);
         break;
     }
     default:
         break;
     }
-    return test;
+    return specialCharacter;
 }
 
 
 char RandomTypeCharacter(int lengthPassWord, int numberOfCharacter, int checkNumber, int checkLower, int checkUpper, int checkSpecialCharacter)
 {
-    char m;
-    int check2 = 1;
-    while (check2 == 1)
+    char character;
+    int checkTakeCharacter = 1;
+    while (checkTakeCharacter == 1)
     {
-        int check = 0;
-        while (check == 0)
+        int checkEnoughCharacter = 0;
+        while (checkEnoughCharacter == 0)
         {
-            check = 1;
-            n = GetRandom(1, 4);
+            checkEnoughCharacter = 1;
+            typeCharacter = GetRandom(1, 4);
             for (int count = lengthPassWord - numberOfCharacter; count < lengthPassWord; count++)
             {
-                if (t[count] == n)
+                if (matrixCheckCharacter[count] == typeCharacter)
                 {
-                    check = 0;
+                    checkEnoughCharacter = 0;
                     break;
                 }
             }
         }
-        switch (n)
+        switch (typeCharacter)
         {
         case 1:   //Ramdon Number 
         {
             if (checkNumber)
             {
-                m = RamdomNumber();
-                check2 = 0;
+                character = RamdomNumber();
+                checkTakeCharacter = 0;
             }
             break;
         }
@@ -87,8 +89,8 @@ char RandomTypeCharacter(int lengthPassWord, int numberOfCharacter, int checkNum
         {
             if (checkLower)
             {
-                m = RandomLowercase();
-                check2 = 0;
+                character = RandomLowercase();
+                checkTakeCharacter = 0;
             }
             break;
         }
@@ -96,8 +98,8 @@ char RandomTypeCharacter(int lengthPassWord, int numberOfCharacter, int checkNum
         {
             if (checkUpper)
             {
-                m = RandomUpper();
-                check2 = 0;
+                character = RandomUpper();
+                checkTakeCharacter = 0;
             }
             break;
         }
@@ -105,8 +107,8 @@ char RandomTypeCharacter(int lengthPassWord, int numberOfCharacter, int checkNum
         {
             if (checkSpecialCharacter)
             {
-                m = RandomSpecialCharacter();
-                check2 = 0;
+                character = RandomSpecialCharacter();
+                checkTakeCharacter = 0;
             }
             break;
         }
@@ -114,5 +116,5 @@ char RandomTypeCharacter(int lengthPassWord, int numberOfCharacter, int checkNum
             break;
         }
     }
-    return m;
+    return character;
 }

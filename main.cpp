@@ -2,12 +2,12 @@
 
 char numbers, specialCharacters, lowercaseLetters, uppercaseLetters;
 
-char PassWord[100];
-int t[100];
+char PassWord[1000];
+int matrixCheckCharacter[1000];
 int lengthOfPassWord = 0;
-int n = 0; //bien check coi ky tu nao co r
+int typeCharacter = 0; 
 int checkNumber = 0, checkLowercase = 0, checkUpper = 0, checkSpecialCharacter = 0;
-int check3;
+int checkNumeberOfCharacter;
 
 
 int main()
@@ -18,10 +18,10 @@ int main()
     cout << "                   PASSWORD GENERATOR APPLICATION" << endl;
     cout << " " << endl;
     cout << "===========================================================================" << endl;
-
-
+    
     cout << "Enter The Length Number Of PassWord:    ";
     cin >> lengthOfPassWord;
+
     while (lengthOfPassWord < 4)
     {
         if (cin.fail())
@@ -35,6 +35,7 @@ int main()
     }
     cout << "Use Number? [y/n]:             ";
     cin >> numbers;
+    
     while (numbers != 'y' && numbers != 'n')
     {
         cout << "Wrong character. Again:       ";
@@ -42,6 +43,7 @@ int main()
     }
     cout << "Use special character? [y/n]:          ";
     cin >> specialCharacters;
+   
     while (specialCharacters != 'y' && specialCharacters != 'n')
     {
         cout << "Wrong character. Again:       ";
@@ -49,6 +51,7 @@ int main()
     }
     cout << "Use uppercase letters? [y/n]:   ";
     cin >> uppercaseLetters;
+    
     while (uppercaseLetters != 'y' && uppercaseLetters != 'n')
     {
         cout << "Wrong character. Again:       ";
@@ -56,14 +59,15 @@ int main()
     }
     cout << "Use  lowercase letters? [y/n]:  ";
     cin >> lowercaseLetters;
+    
     while (lowercaseLetters != 'y' && lowercaseLetters != 'n')
     {
         cout << "Wrong character. Again:       ";
         cin >> lowercaseLetters;
     }
 
-    if (lowercaseLetters == 'y') //checkNumber, checkLowercase, checkUpper, checkSpecialCharacter;
-        checkLowercase = 1;		//numbers, specialCharacters, lowercaseLetters, uppercaseLetters
+    if (lowercaseLetters == 'y') 
+        checkLowercase = 1;		
     if (numbers == 'y')
         checkNumber = 1;
     if (specialCharacters == 'y')
@@ -71,10 +75,8 @@ int main()
     if (uppercaseLetters == 'y')
         checkUpper = 1;
 
-    srand((unsigned int)time(NULL));
-
-    check3 = checkLowercase + checkNumber + checkSpecialCharacter + checkUpper;
-    if (check3 == 0)
+    checkNumeberOfCharacter = checkLowercase + checkNumber + checkSpecialCharacter + checkUpper;
+    if (checkNumeberOfCharacter == 0)
     {
         cout << "\nCan't create PassWord" << endl;
         return 0;
@@ -82,24 +84,26 @@ int main()
 
     for (int i = 0; i < lengthOfPassWord; i++)
     {
-        PassWord[i] = RandomTypeCharacter(lengthOfPassWord, check3, checkNumber, checkLowercase, checkUpper, checkSpecialCharacter);
-        if (i + check3 >= lengthOfPassWord)
+        PassWord[i] = RandomTypeCharacter(lengthOfPassWord, checkNumeberOfCharacter, checkNumber, checkLowercase, checkUpper, checkSpecialCharacter);
+        if (i + checkNumeberOfCharacter >= lengthOfPassWord)
         {
-            t[i] = n;
+            matrixCheckCharacter[i] = typeCharacter;
         }
     }
+
     cout << "===========================================================================" << endl;
     cout << "" << endl;
     cout << "Password is:    ";
+
     for (int i = 0; i < lengthOfPassWord; i++)
     {
 
         cout << PassWord[i];
     }
+
     cout << "" << endl;
     cout << "" << endl;
     cout << "===========================================================================" << endl;
-
 
     getchar();
     return 0;
